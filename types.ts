@@ -9,6 +9,8 @@ export enum ViewMode {
   CINEMA = 'CINEMA'
 }
 
+export type Language = 'en' | 'fa';
+
 export interface Artifact {
   id: string;
   name: string;
