@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { 
   OrbitControls, 
@@ -17,26 +17,6 @@ import * as THREE from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { CameraMode } from '../types';
-
-// Fix for missing JSX intrinsic elements definitions
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      group: any;
-      mesh: any;
-      meshStandardMaterial: any;
-      ambientLight: any;
-      spotLight: any;
-      primitive: any;
-      gridHelper: any;
-      fog: any;
-      color: any;
-      planeGeometry: any;
-      pointLight: any;
-      directionalLight: any;
-    }
-  }
-}
 
 interface Environment3DProps {
   modelUrl: string | null;
@@ -155,8 +135,15 @@ const ArtifactDisplay = ({
 };
 
 export const Environment3D: React.FC<Environment3DProps> = ({ modelUrl, mode, fileName, scrollProgress }) => {
+  // We use touch-action: none when in ORBIT mode to prevent the page from scrolling while rotating the model.
+  // In CINEMATIC mode, we allow default touch action so the user can scroll the page (which animates the model).
+  const touchAction = mode === CameraMode.ORBIT ? 'none' : 'pan-y';
+
   return (
-    <div className="w-full h-full absolute inset-0 bg-[#eae8e1] z-0">
+    <div 
+      className="w-full h-full absolute inset-0 bg-[#eae8e1] z-0" 
+      style={{ touchAction }}
+    >
       <Canvas shadows dpr={[1, 2]} gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping }}>
         <React.Suspense fallback={<Loader />}>
           
@@ -209,9 +196,10 @@ export const Environment3D: React.FC<Environment3DProps> = ({ modelUrl, mode, fi
             <OrbitControls 
               autoRotate={false} 
               enablePan={false} 
+              enableZoom={true}
+              enableRotate={true}
               minPolarAngle={0} 
               maxPolarAngle={Math.PI / 1.5} 
-              enableZoom={true}
               makeDefault
             />
           )}

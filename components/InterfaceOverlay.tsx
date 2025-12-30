@@ -67,81 +67,98 @@ export const InterfaceOverlay: React.FC<InterfaceOverlayProps> = ({
 
   return (
     <>
-      {/* Floating Dock - Bottom of Screen */}
-      <div className="fixed bottom-6 left-0 right-0 z-50 flex justify-center pointer-events-none">
-        <div className={`bg-[#f4f1ea]/80 backdrop-blur-xl border border-bastam-dark/10 shadow-2xl shadow-bastam-dark/10 rounded-2xl p-2 flex items-center gap-2 sm:gap-4 pointer-events-auto transition-all hover:scale-[1.01] max-w-3xl w-full mx-6 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+      {/* Floating Dock - Responsive Design */}
+      <div className="fixed bottom-4 md:bottom-6 left-0 right-0 z-50 flex justify-center pointer-events-none px-4">
+        <div 
+          className={`
+            bg-[#f4f1ea]/90 backdrop-blur-xl border border-bastam-dark/10 shadow-2xl shadow-bastam-dark/10 
+            rounded-2xl p-2 md:p-2 
+            flex items-center gap-2 pointer-events-auto transition-all duration-300 
+            w-full max-w-[95%] md:max-w-3xl
+            ${isRTL ? 'flex-row-reverse' : 'flex-row'}
+          `}
+        >
           
           {/* Left: Mode Switcher */}
-          <div className={`flex bg-bastam-dark/5 rounded-xl p-1 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+          <div className={`flex bg-bastam-dark/5 rounded-xl p-1 shrink-0 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
             <button 
               onClick={handleResearchClick}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 ${viewMode === ViewMode.ARTICLE ? 'bg-white shadow-sm text-bastam-dark' : 'text-bastam-text/50 hover:text-bastam-dark'} ${isRTL ? 'flex-row-reverse font-persian' : 'font-sans'}`}
-              title={viewMode === ViewMode.ARTICLE ? "Switch to Cinema Mode" : "Read Research Article"}
+              className={`
+                flex items-center justify-center gap-2 px-3 md:px-4 py-3 md:py-2 rounded-lg transition-all duration-300 
+                ${viewMode === ViewMode.ARTICLE ? 'bg-white shadow-sm text-bastam-dark' : 'text-bastam-text/50 hover:text-bastam-dark'} 
+                ${isRTL ? 'flex-row-reverse font-persian' : 'font-sans'}
+              `}
+              title={labels.research}
             >
-              <BookOpen size={16} />
-              <span className="text-xs font-bold uppercase tracking-widest hidden sm:inline">{labels.research}</span>
+              <BookOpen size={18} />
+              <span className="text-xs font-bold uppercase tracking-widest hidden md:inline">{labels.research}</span>
             </button>
             <button 
               onClick={() => onViewModeChange(ViewMode.ARCHIVE)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 ${viewMode === ViewMode.ARCHIVE ? 'bg-white shadow-sm text-bastam-dark' : 'text-bastam-text/50 hover:text-bastam-dark'} ${isRTL ? 'flex-row-reverse font-persian' : 'font-sans'}`}
+              className={`
+                flex items-center justify-center gap-2 px-3 md:px-4 py-3 md:py-2 rounded-lg transition-all duration-300 
+                ${viewMode === ViewMode.ARCHIVE ? 'bg-white shadow-sm text-bastam-dark' : 'text-bastam-text/50 hover:text-bastam-dark'} 
+                ${isRTL ? 'flex-row-reverse font-persian' : 'font-sans'}
+              `}
+              title={labels.archive}
             >
-              <Grid size={16} />
-              <span className="text-xs font-bold uppercase tracking-widest hidden sm:inline">{labels.archive}</span>
+              <Grid size={18} />
+              <span className="text-xs font-bold uppercase tracking-widest hidden md:inline">{labels.archive}</span>
             </button>
           </div>
 
-          <div className="w-[1px] h-6 bg-bastam-dark/10" />
+          <div className="w-[1px] h-8 bg-bastam-dark/10 hidden md:block" />
 
           {/* Center: Navigation */}
-          <div className={`flex-1 flex items-center justify-between px-2 min-w-0 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+          <div className={`flex-1 flex items-center justify-between px-1 md:px-2 min-w-0 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
             <button 
               onClick={isRTL ? onNext : onPrev}
-              className="p-3 rounded-full hover:bg-white text-bastam-text/60 hover:text-bastam-dark transition-colors"
+              className="p-3 md:p-3 rounded-full hover:bg-white text-bastam-text/60 hover:text-bastam-dark transition-colors active:scale-95"
             >
-              <ChevronLeft size={20} className={isRTL ? "rotate-180" : ""} />
+              <ChevronLeft size={22} className={isRTL ? "rotate-180" : ""} />
             </button>
 
-            <div className="flex flex-col items-center min-w-0 text-center px-4">
+            <div className="flex flex-col items-center min-w-0 text-center px-2">
               <span className="text-[9px] text-bastam-text/40 uppercase tracking-widest font-mono mb-0.5">
                 {String(currentIndex + 1).padStart(2, '0')} / {String(artifacts.length).padStart(2, '0')}
               </span>
-              <span className={`text-xs sm:text-sm font-bold text-bastam-dark truncate w-[120px] sm:w-auto ${isRTL ? 'font-persian' : 'font-serif'}`}>
+              <span className={`text-xs md:text-sm font-bold text-bastam-dark truncate w-[80px] xs:w-[120px] md:w-auto ${isRTL ? 'font-persian' : 'font-serif'}`}>
                 {artifact.name}
               </span>
             </div>
 
             <button 
               onClick={isRTL ? onPrev : onNext}
-              className="p-3 rounded-full hover:bg-white text-bastam-text/60 hover:text-bastam-dark transition-colors"
+              className="p-3 md:p-3 rounded-full hover:bg-white text-bastam-text/60 hover:text-bastam-dark transition-colors active:scale-95"
             >
-              <ChevronRight size={20} className={isRTL ? "rotate-180" : ""} />
+              <ChevronRight size={22} className={isRTL ? "rotate-180" : ""} />
             </button>
           </div>
 
-          <div className="w-[1px] h-6 bg-bastam-dark/10" />
+          <div className="w-[1px] h-8 bg-bastam-dark/10 hidden md:block" />
 
           {/* Right: Camera Controls & Lang */}
-          <div className={`flex items-center gap-1 sm:gap-2 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
+          <div className={`flex items-center gap-1 shrink-0 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
             <button
                onClick={onLanguageToggle}
-               className="p-3 rounded-xl transition-colors hover:bg-white text-bastam-text/70"
+               className="p-3 md:p-3 rounded-xl transition-colors hover:bg-white text-bastam-text/70 active:scale-95"
                title="Switch Language / تغییر زبان"
             >
-               <Languages size={18} />
+               <Languages size={20} />
             </button>
             <button 
                onClick={onToggleDescription}
-               className={`p-3 rounded-xl transition-colors relative group ${isDescriptionVisible ? 'bg-white text-bastam-dark shadow-sm' : 'hover:bg-white text-bastam-text/70'}`}
+               className={`p-3 md:p-3 rounded-xl transition-colors relative group active:scale-95 hidden xs:block ${isDescriptionVisible ? 'bg-white text-bastam-dark shadow-sm' : 'hover:bg-white text-bastam-text/70'}`}
                title="Toggle Description Card"
             >
-              <Info size={18} />
+              <Info size={20} />
             </button>
             <button 
                onClick={() => onModeToggle(cameraMode === CameraMode.CINEMATIC ? CameraMode.ORBIT : CameraMode.CINEMATIC)}
-               className={`p-3 rounded-xl transition-colors relative group ${cameraMode === CameraMode.ORBIT ? 'bg-bastam-accent text-white shadow-lg shadow-bastam-accent/30' : 'hover:bg-white text-bastam-text/70'}`}
+               className={`p-3 md:p-3 rounded-xl transition-colors relative group active:scale-95 ${cameraMode === CameraMode.ORBIT ? 'bg-bastam-accent text-white shadow-lg shadow-bastam-accent/30' : 'hover:bg-white text-bastam-text/70'}`}
                title={cameraMode === CameraMode.CINEMATIC ? "Enable Manual Control" : "Enable Cinematic Mode"}
             >
-              {cameraMode === CameraMode.CINEMATIC ? <Play size={18} /> : <Anchor size={18} />}
+              {cameraMode === CameraMode.CINEMATIC ? <Play size={20} /> : <Anchor size={20} />}
             </button>
           </div>
         </div>
@@ -151,15 +168,15 @@ export const InterfaceOverlay: React.FC<InterfaceOverlayProps> = ({
       {viewMode === ViewMode.ARCHIVE && (
         <div className={`fixed inset-0 z-40 bg-[#f4f1ea] animate-in fade-in zoom-in-95 duration-500 flex flex-col pt-24 pb-32 overflow-hidden ${isRTL ? 'text-right' : 'text-left'}`}>
           
-          <div className={`w-full max-w-7xl mx-auto px-6 mb-8 flex justify-between items-end border-b border-bastam-dark/10 pb-8 ${isRTL ? 'flex-row-reverse font-persian' : 'flex-row'}`}>
+          <div className={`w-full max-w-7xl mx-auto px-6 mb-8 flex flex-col md:flex-row justify-between items-start md:items-end border-b border-bastam-dark/10 pb-8 ${isRTL ? 'md:flex-row-reverse font-persian' : ''}`}>
              <div>
                 <span className="text-bastam-accent text-xs font-bold uppercase tracking-widest block mb-2">{isRTL ? 'مجموعه دیجیتال' : 'Digital Collection'}</span>
-                <h2 className={`text-4xl md:text-5xl text-bastam-dark ${isRTL ? 'font-persian font-bold' : 'font-serif'}`}>
+                <h2 className={`text-3xl md:text-5xl text-bastam-dark ${isRTL ? 'font-persian font-bold' : 'font-serif'}`}>
                    {isRTL ? 'فهرست آثار' : 'Artifact Index'}
                 </h2>
              </div>
-             <div className="hidden sm:block">
-               <div className={`text-3xl text-bastam-dark/20 ${isRTL ? 'font-persian' : 'font-serif'}`}>
+             <div className="mt-4 md:mt-0">
+               <div className={`text-2xl md:text-3xl text-bastam-dark/20 ${isRTL ? 'font-persian' : 'font-serif'}`}>
                    {isRTL ? '۲۰ اثر' : '20 Items'}
                </div>
              </div>

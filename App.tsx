@@ -324,7 +324,7 @@ const App: React.FC = () => {
             isDescriptionVisible && (viewMode === ViewMode.ARTICLE || viewMode === ViewMode.CINEMA) 
             ? 'opacity-100' 
             : 'opacity-0 pointer-events-none'
-          } ${isRTL ? 'right-8 md:right-12 text-right' : 'left-8 md:left-12 text-left'} ${!isDescriptionVisible && (isRTL ? 'translate-x-12' : '-translate-x-12')}`}
+          } ${isRTL ? 'right-4 md:right-12 text-right' : 'left-4 md:left-12 text-left'} ${!isDescriptionVisible && (isRTL ? 'translate-x-12' : '-translate-x-12')} hidden md:block`}
         >
            <div className={`flex items-center gap-3 mb-4 opacity-60 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
              <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-bastam-accent">{labels.artifact} {String(currentIndex + 1).padStart(2, '0')}</div>
@@ -348,18 +348,21 @@ const App: React.FC = () => {
               </div>
            )}
         </div>
+
+        {/* Mobile Description (Shown as a small pill at top if needed, or integrated into UI) */}
+        {/* Intentionally left minimal on mobile to show the 3D model, descriptions are in the "Research" article view */}
       </div>
 
       {/* Header - Minimal & Brand Centric */}
-      <nav className={`fixed top-0 z-50 p-8 flex justify-between items-start pointer-events-none ${isRTL ? 'right-0' : 'left-0'}`}>
+      <header className={`fixed top-0 z-50 w-full px-6 py-4 md:px-8 md:py-8 flex justify-between items-start pointer-events-none bg-gradient-to-b from-[#f4f1ea] to-transparent ${isRTL ? 'right-0' : 'left-0'}`}>
         <div className="flex flex-col gap-1 pointer-events-auto">
            <div className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-             <h1 className={`text-2xl font-bold tracking-widest text-bastam-dark ${isRTL ? 'font-persian' : 'font-serif'}`}>{CONTENT[language].title}</h1>
+             <h1 className={`text-xl md:text-2xl font-bold tracking-widest text-bastam-dark ${isRTL ? 'font-persian' : 'font-serif'}`}>{CONTENT[language].title}</h1>
              <span className="h-4 w-[1px] bg-bastam-dark/20"></span>
              <span className={`text-[10px] tracking-[0.3em] text-bastam-text/60 uppercase ${isRTL ? 'font-persian' : 'font-sans'}`}>{CONTENT[language].subtitle}</span>
            </div>
         </div>
-      </nav>
+      </header>
 
       {/* Interface Controls */}
       {activeArtifact && (
@@ -384,21 +387,21 @@ const App: React.FC = () => {
 
       {/* ARTICLE SIDEBAR - The Core Content */}
       <div 
-        className={`absolute top-0 h-full z-10 transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] bg-[#f4f1ea]/95 backdrop-blur-md shadow-2xl ${
+        className={`absolute top-0 h-full z-10 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] bg-[#f4f1ea] md:bg-[#f4f1ea]/95 backdrop-blur-md shadow-2xl ${
             viewMode === ViewMode.ARTICLE ? 'w-full lg:w-[45%]' : 'w-full lg:w-[45%]'
           } ${isRTL ? 
-            `left-0 border-r border-bastam-dark/5 ${viewMode === ViewMode.ARTICLE ? 'translate-x-0' : '-translate-x-full'}` : 
-            `right-0 border-l border-bastam-dark/5 ${viewMode === ViewMode.ARTICLE ? 'translate-x-0' : 'translate-x-full'}`
+            `left-0 md:border-r border-bastam-dark/5 ${viewMode === ViewMode.ARTICLE ? 'translate-x-0' : '-translate-x-full'}` : 
+            `right-0 md:border-l border-bastam-dark/5 ${viewMode === ViewMode.ARTICLE ? 'translate-x-0' : 'translate-x-full'}`
           }
         `}
       >
         {/* CLOSE BUTTON - Switches to CINEMA view */}
         <button 
           onClick={() => setViewMode(ViewMode.CINEMA)}
-          className={`absolute top-6 z-50 p-2 rounded-full bg-white/80 text-bastam-dark/40 hover:text-bastam-accent hover:bg-white transition-all duration-300 shadow-sm ${isRTL ? 'left-6' : 'right-6'}`}
+          className={`absolute top-4 md:top-6 z-50 p-2 rounded-full bg-white text-bastam-dark hover:text-bastam-accent shadow-sm ${isRTL ? 'left-4 md:left-6' : 'right-4 md:right-6'}`}
           title="Close Article / Enter Cinema Mode"
         >
-          <X size={20} />
+          <X size={24} />
         </button>
 
         <div 
@@ -406,15 +409,15 @@ const App: React.FC = () => {
           onScroll={handleScroll}
           className={`h-full w-full overflow-y-auto no-scrollbar ${isRTL ? 'text-right' : 'text-left'}`}
         >
-          <div className="p-8 md:p-16 flex flex-col gap-20 pb-48 min-h-full max-w-2xl mx-auto">
+          <div className="p-6 md:p-16 flex flex-col gap-12 md:gap-20 pb-48 min-h-full max-w-2xl mx-auto">
             
             {/* ARTICLE HERO */}
-            <section className="pt-24">
+            <section className="pt-20 md:pt-24">
                <div className={`inline-flex items-center gap-3 text-bastam-accent mb-8 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
                   <span className="h-[1px] w-12 bg-bastam-accent"></span>
                   <span className="text-xs font-bold uppercase tracking-[0.25em]">{isRTL ? 'پروفایل پژوهشی' : 'Research Profile'}</span>
                </div>
-               <h1 className={`text-4xl md:text-5xl lg:text-6xl leading-[1.1] text-bastam-dark mb-10 ${isRTL ? 'font-persian font-bold' : 'font-serif'}`}>
+               <h1 className={`text-3xl md:text-5xl lg:text-6xl leading-[1.1] text-bastam-dark mb-10 ${isRTL ? 'font-persian font-bold' : 'font-serif'}`}>
                  {language === 'en' 
                    ? "Digital Reconstruction of Bastam Fortress: An Architectural Critique"
                    : "بازسازی دیجیتال دژ بسطام: نقدی معمارانه"}
