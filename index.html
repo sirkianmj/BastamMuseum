@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bastam Fortress Reconstruction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ['Playfair Display', 'serif'],
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              bastam: {
+                bg: '#f4f1ea', // Light Parchment
+                dark: '#1c1917', // Deep Stone
+                text: '#1e293b', // Charcoal/Slate
+                accent: '#c05621', // Terracotta
+                gold: '#b49b57', // Muted Gold
+                sand: '#e7e5e4',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body { margin: 0; background-color: #f4f1ea; color: #1e293b; overflow-x: hidden; }
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .no-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@react-three/drei": "https://esm.sh/@react-three/drei@^10.7.7",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "@react-three/fiber": "https://esm.sh/@react-three/fiber@^9.4.2",
+    "three": "https://esm.sh/three@^0.182.0",
+    "three/examples/jsm/loaders/FBXLoader": "https://esm.sh/three@0.182.0/examples/jsm/loaders/FBXLoader",
+    "three/examples/jsm/loaders/OBJLoader": "https://esm.sh/three@0.182.0/examples/jsm/loaders/OBJLoader",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "three/": "https://esm.sh/three@^0.182.0/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
