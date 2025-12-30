@@ -4,105 +4,107 @@ import { InterfaceOverlay } from './components/InterfaceOverlay';
 import { CameraMode, Artifact, ViewMode } from './types';
 import { ArrowRight, Maximize2, FileText, MousePointer2, X } from 'lucide-react';
 
+const GITHUB_BASE = 'https://raw.githubusercontent.com/sirkianmj/BastamMuseum/main/3dmodels/';
+
 // FULL 20 ITEMS LIST
 const INITIAL_ARTIFACTS: Artifact[] = [
   {
-    url: '3dmodels/Standard_Wall_Segment_opt.glb',
+    url: `${GITHUB_BASE}Standard_Wall_Segment_opt.glb`,
     name: 'Standard Wall Segment',
     description: 'A modular wall section representing the standard fortification architecture of the Bastam citadel. Based on the Schalenbauweise (shell construction) technique described in the excavation reports, this model features a robust double-faced stone socle (base) filled with rubble, designed to support a mudbrick superstructure. This was the primary method used to enclose the vast 800-meter length of the fortress.'
   },
   {
-    url: '3dmodels/Stepped_Slope_Wall_opt.glb',
+    url: `${GITHUB_BASE}Stepped_Slope_Wall_Hangbebauung%20Module_opt.glb`,
     name: 'Stepped Slope Wall',
     description: 'Designed for the steep topography of the Bastam citadel, this module replicates the specific architecture of the Hangbebauung (Slope Construction). As detailed in Bastam II, Urartian architects cut stepped foundations (Felsabtreppungen) directly into the bedrock. This asset allows you to place walls that naturally step down angled terrain, connecting the upper citadel to the lower settlement.'
   },
   {
-    url: '3dmodels/The_Cyclopean_Tower_Block_opt.glb',
+    url: `${GITHUB_BASE}The_Cyclopean_Tower_Block_opt.glb`,
     name: 'Cyclopean Tower Block',
     description: 'A massive masonry block representing the heavy defensive architecture of the citadel’s lower fortifications. Based on the Risalit structures described in Bastam I, these large, rough-hewn blocks form the base of the projecting defensive towers and buttresses that protected the perimeter of Rusai-URU.TUR against siege.'
   },
   {
-    url: '3dmodels/The_Fortress_Corner_Block_opt.glb',
+    url: `${GITHUB_BASE}The_Fortress_Corner_Block_opt.glb`,
     name: 'Fortress Corner Block',
     description: 'A specialized structural asset representing the Eckbollwerk (Corner Bulwark). As described in the excavations of the Östliche Vorburg (Eastern Fortress), these heavy stone blocks were used to construct the reinforced, often sharp-angled corners of the defensive walls, providing critical structural integrity at turning points in the fortification line.'
   },
   {
-    url: '3dmodels/The_Limestone_Paving_Module_opt.glb',
+    url: `${GITHUB_BASE}The_Limestone_Paving_Module_opt.glb`,
     name: 'Limestone Paving Module',
     description: 'A textured floor module depicting the Steinplattenpflaster (stone slab paving) found in high-traffic areas of the fortress. Excavations revealed these paved surfaces in the monumental South Gate, the ramps leading to the Upper Castle, and the side aisles of the great pillared halls (Hallenbauten).'
   },
   {
-    url: '3dmodels/The_Pithos_Bench_opt.glb',
+    url: `${GITHUB_BASE}The_Pithos_Bench_opt.glb`,
     name: 'Pithos Bench',
     description: 'A storage room asset recreating the bankartigen Erhöhungen (bench-like elevations) found in the citadel’s magazines. Based on findings in the Unterburg and settlement, these stone and mudbrick benches were designed to support rows of massive Pithoi jars, stabilizing them for the storage of wine and grain.'
   },
   {
-    url: '3dmodels/Urartian_Wooden_Column_opt.glb',
+    url: `${GITHUB_BASE}Urartian_Wooden_Column_opt.glb`,
     name: 'Urartian Wooden Column',
     description: 'A reconstruction of the vertical supports used in the great Hallenbauten (Halls). Based on the stone bases found in situ and the charred remains of timber, this model depicts the thick wooden columns that supported the heavy roofs of the royal stables and reception halls described in Bastam II.'
   },
   {
-    url: '3dmodels/Ashlar_Stone_opt.glb',
+    url: `${GITHUB_BASE}Ashlar_Stone_opt.glb`,
     name: 'Ashlar Stone',
     description: 'A high-quality dressed stone block featuring the bossierte Quadern (bossed ashlar) technique. Unlike the rough fieldstones used in common walls, these precisely cut stones were found in the elite sections of the Middle Castle (Mittelburg), signifying high-status royal or religious architecture.'
   },
   {
-    url: '3dmodels/Bulla_opt.glb',
+    url: `${GITHUB_BASE}Bulla_opt.glb`,
     name: 'Bulla (Clay Sealing)',
     description: 'A small but significant artifact asset representing a Tonbulla (clay sealing). Thousands of these stamped clay pieces were excavated in the "Bone Rooms" (Knochenräume). They served as administrative tags or receipts for goods delivered to the fortress, often bearing the seal of the King or royal officials.'
   },
   {
-    url: '3dmodels/Destruction_Debris_Tile_opt.glb',
+    url: `${GITHUB_BASE}Destruction_Debris_Tile_opt.glb`,
     name: 'Destruction Debris Tile',
     description: 'A textured ground asset depicting the Brandschutt (fire destruction debris). This tile represents the layer of ash, charred timber, and baked mud found throughout the site, preserving the moment Rusai-URU.TUR was destroyed by fire around 590 BC. It adds historical realism to ruined or post-siege scenes.'
   },
   {
-    url: '3dmodels/Ddway_opt.glb',
+    url: `${GITHUB_BASE}Ddway_opt.glb`,
     name: 'Domestic Doorway Module',
     description: 'A residential architectural element designed for the settlement (Siedlung) area at the foot of the fortress. Unlike the monumental gates, this doorway module reflects the domestic architecture of the private houses excavated in Area S2, featuring a simple lintel and jambs suited for mudbrick construction.'
   },
   {
-    url: '3dmodels/Fortress_Corner_Segment_opt.glb',
+    url: `${GITHUB_BASE}Fortress_Corner_Segment_opt.glb`,
     name: 'Fortress Corner Segment',
     description: 'A large modular section representing a complete Eckrisalit (Corner Projection). This asset allows for the construction of the jagged, saw-tooth perimeter walls typical of Urartian fortification design, which maximized flanking fire coverage for the defenders as described in Bastam I.'
   },
   {
-    url: '3dmodels/Monumental_Gate_Entrance_opt.glb',
+    url: `${GITHUB_BASE}Monumental_Gate_Entrance_opt.glb`,
     name: 'Monumental Gate Entrance',
     description: 'A grand architectural asset representing the Southern and Northern Gates (Südtor / Nordtor). Based on the excavation plans, this model captures the imposing nature of the main fortress entrances, featuring heavy flanking towers and stone thresholds that controlled access to the citadel.'
   },
   {
-    url: '3dmodels/arrow_head_opt.glb',
+    url: `${GITHUB_BASE}arrow_head_opt.glb`,
     name: 'Peykan (Arrowhead)',
     description: 'A detailed prop representing the iron arrowheads and lance tips (Eisen-Lanzenspitzen) excavated at the site. "Peykan" (Persian for arrowhead) refers to the military remnants found in the destruction layers, testifying to the garrison\'s weaponry and the final battle for the fortress.'
   },
   {
-    url: '3dmodels/pot_opt.glb',
+    url: `${GITHUB_BASE}pot_opt.glb`,
     name: 'Urartian Pot',
     description: 'A ceramic prop representing the distinctive Urartian pottery found throughout the site. This model is based on the fine red polished ware and utilitarian vessels found in the settlement and store rooms (Bastam I), essential for dressing scenes in magazines and domestic quarters.'
   },
   {
-    url: '3dmodels/roof_opt.glb',
+    url: `${GITHUB_BASE}rood_opt.glb`,
     name: 'Roof Module',
     description: 'A structural module depicting the flat Urartian roof construction. Based on clay impressions found in the destruction debris (Bastam II), this model features closely laid round timber beams covered with reed mats and a thick layer of tamped earth, a distinct style of the ancient Near East.'
   },
   {
-    url: '3dmodels/Slope_Connector_opt.glb',
+    url: `${GITHUB_BASE}Slope_Connector_opt.glb`,
     name: 'Slope Connector',
     description: 'A utility architectural piece designed to bridge the gap between different terrace levels. Essential for the Hangbebauung (Slope Building) areas, this connector allows for the seamless transition of walls across the jagged, irregular bedrock topography characteristic of the Bastam site.'
   },
   {
-    url: '3dmodels/Stable_Manger_1opt.glb',
+    url: `${GITHUB_BASE}Stable_Manger_1opt.glb`,
     name: 'Stable Manger',
     description: 'A functional interior prop based on Wolfram Kleiss\'s interpretation of the pillared halls. As detailed in Bastam II, the long stone benches (Bänke) lining the walls of the halls were likely used as Futtertröge (mangers), identifying these large buildings as royal horse stables for the cavalry.'
   },
   {
-    url: '3dmodels/staircase_stone_opt.glb',
+    url: `${GITHUB_BASE}staircase_stone_opt.glb`,
     name: 'Stone Staircase',
     description: 'A structural module representing the internal stone staircases (Treppenhaus) found in multi-story buildings like the Hallenbau. These stairs provided access to upper floors or the roof, constructed from rough-hewn stone slabs to connect the varying elevations of the terraced architecture.'
   },
   {
-    url: '3dmodels/Bone_RoomFloorTile_opt.glb',
+    url: `${GITHUB_BASE}Bone_RoomFloorTile_opt.glb`,
     name: 'Bone Room Floor Tile',
     description: 'A ground texture asset recreating the unique archaeological phenomenon of the "Bone Rooms" found in the Middle Castle (Mittelburg). As detailed in Bastam II, excavations in Room MB 2,1 revealed a massive layer containing nearly 500,000 animal bones mixed with ash and clay bullae. This tile depicts that specific destruction horizon.'
   }
