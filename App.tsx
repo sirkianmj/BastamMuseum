@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Environment3D } from './components/Environment3D';
 import { InterfaceOverlay } from './components/InterfaceOverlay';
 import { CameraMode, Artifact, ViewMode, Language } from './types';
@@ -224,20 +224,11 @@ const BASE_ARTIFACTS_DATA = [
 
 const App: React.FC = () => {
   const [language, setLanguage] = useState<Language>('en');
-  // Initialize artifacts based on default language 'en'
-  const [artifacts, setArtifacts] = useState<Artifact[]>([]);
-  const [activeArtifactId, setActiveArtifactId] = useState<string>('artifact-0');
-  const [cameraMode, setCameraMode] = useState<CameraMode>(CameraMode.CINEMATIC);
-  const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.ARTICLE);
-  const [isDescriptionVisible, setIsDescriptionVisible] = useState(true);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Update artifacts when language changes
-  useEffect(() => {
-    const newArtifacts = BASE_ARTIFACTS_DATA.map((base, index) => {
-      const content = CONTENT[language].artifacts[index];
+  // Helper to generate artifacts synchronously
+  const getArtifacts = (lang: Language): Artifact[] => {
+    return BASE_ARTIFACTS_DATA.map((base, index) => {
+      const content = CONTENT[lang].artifacts[index];
       return {
         id: `artifact-${index}`,
         url: base.url,
@@ -246,20 +237,27 @@ const App: React.FC = () => {
         fileName: base.url.split('/').pop()
       };
     });
-    setArtifacts(newArtifacts);
-  }, [language]);
+  };
+
+  // Initialize with data immediately to prevent undefined crashes on first render
+  const [artifacts, setArtifacts] = useState<Artifact[]>(() => getArtifacts('en'));
+  const [activeArtifactId, setActiveArtifactId] = useState<string>('artifact-0');
+  const [cameraMode, setCameraMode] = useState<CameraMode>(CameraMode.CINEMATIC);
+  const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.ARTICLE);
+  const [isDescriptionVisible, setIsDescriptionVisible] = useState(true);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const activeArtifact = artifacts.find(a => a.id === activeArtifactId) || artifacts[0];
   const currentIndex = artifacts.findIndex(a => a.id === activeArtifactId);
 
   // Auto-switch camera mode based on ViewMode
-  useEffect(() => {
-    if (viewMode === ViewMode.CINEMA) {
-      setCameraMode(CameraMode.ORBIT);
-    } else if (viewMode === ViewMode.ARTICLE) {
-      setCameraMode(CameraMode.CINEMATIC);
-    }
-  }, [viewMode]);
+  if (viewMode === ViewMode.CINEMA && cameraMode !== CameraMode.ORBIT) {
+     setCameraMode(CameraMode.ORBIT);
+  } else if (viewMode === ViewMode.ARTICLE && cameraMode !== CameraMode.CINEMATIC) {
+     setCameraMode(CameraMode.CINEMATIC);
+  }
 
   const handleScroll = () => {
     if (scrollContainerRef.current) {
@@ -270,13 +268,10 @@ const App: React.FC = () => {
   };
 
   const setModelByName = (name: string) => {
-    // We check against the current language names first, or fallback to english logic if needed
-    // Simple logic: check includes
     const found = artifacts.find(a => a.name.toLowerCase().includes(name.toLowerCase()));
     
-    // Fallback for hardcoded English keys in the article text if we are in Persian mode but using English keys
+    // Fallback for English keys if using Persian
     if (!found && language === 'fa') {
-        // Map English keys to index and find
         const enIndex = CONTENT.en.artifacts.findIndex(a => a.name.includes(name));
         if (enIndex !== -1) {
              setActiveArtifactId(`artifact-${enIndex}`);
@@ -300,7 +295,9 @@ const App: React.FC = () => {
   };
 
   const toggleLanguage = () => {
-    setLanguage(prev => prev === 'en' ? 'fa' : 'en');
+    const newLang = language === 'en' ? 'fa' : 'en';
+    setLanguage(newLang);
+    setArtifacts(getArtifacts(newLang));
   };
 
   const isRTL = language === 'fa';
